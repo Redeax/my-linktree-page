@@ -1,2 +1,221 @@
-# my-linktree-page
-صفحة هبوط شخصية متعددة اللغات (عربي/إنجليزي) مشابهة لموقع Linktr.ee.  تحتوي على روابط وسائل التواصل الاجتماعي، زر نسخ الرابط، مؤثرات صوتية، وضع ليلي/نهاري، خلفية متحركة، وعداد زوار عالمي باستخدام Firebase.  مثالية لعرض روابطك الشخصية والمتاجر بسهولة وأسلوب جذاب.
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>صفحتي - My Page</title>
+  <!-- أيقونات Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root {
+      --text-color: #fff;
+      --card-bg: #fff;
+      --card-text: #333;
+    }
+    body.light {
+      --text-color: #222;
+      --card-bg: #fff;
+      --card-text: #222;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(270deg, #6a11cb, #2575fc, #ff6a00, #ff0076);
+      background-size: 800% 800%;
+      animation: gradientMove 15s ease infinite;
+      color: var(--text-color);
+      text-align: center;
+      padding: 30px;
+      transition: 0.3s;
+      position: relative;
+      overflow-x: hidden;
+    }
+    .toggle-btn {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: #fff;
+      color: #333;
+      border: none;
+      border-radius: 20px;
+      padding: 8px 15px;
+      cursor: pointer;
+      font-weight: bold;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+      animation: fadeIn 1s ease-in-out;
+    }
+    .copy-btn {
+      margin-top: 20px;
+      background: #fff;
+      color: #333;
+      border: none;
+      border-radius: 20px;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-weight: bold;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+      transition: 0.3s;
+      animation: fadeInUp 1s ease-in-out;
+    }
+    .copy-btn:hover {
+      background: #f1f1f1;
+      transform: scale(1.1) rotate(2deg);
+    }
+    .profile-img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      margin-bottom: 15px;
+      border: 3px solid #fff;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      animation: bounceIn 1.5s;
+      transition: 0.3s;
+    }
+    .profile-img:hover {
+      transform: scale(1.15) rotate(-5deg);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+    }
+    h1 {
+      margin: 10px 0;
+      font-size: 24px;
+      animation: fadeInDown 1s;
+      transition: 0.3s;
+    }
+    h1:hover {
+      color: #ffeb3b;
+      transform: scale(1.05);
+    }
+    p {
+      margin: 5px 0 20px;
+      font-size: 16px;
+      animation: fadeIn 1.5s;
+      transition: 0.3s;
+    }
+    p:hover {
+      color: #00e5ff;
+      transform: scale(1.05);
+    }
+    .links a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin: 10px auto;
+      padding: 15px;
+      max-width: 320px;
+      background: var(--card-bg);
+      color: var(--card-text);
+      text-decoration: none;
+      border-radius: 30px;
+      font-weight: bold;
+      transition: 0.3s;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+      opacity: 0;
+      transform: translateY(30px);
+      animation: slideUp 0.8s forwards;
+    }
+    .links a:nth-child(1) { animation-delay: 0.2s; }
+    .links a:nth-child(2) { animation-delay: 0.4s; }
+    .links a:nth-child(3) { animation-delay: 0.6s; }
+    .links a:nth-child(4) { animation-delay: 0.8s; }
+    .links a:nth-child(5) { animation-delay: 1s; }
+    .links a:hover {
+      background: #f1f1f1;
+      transform: scale(1.1) translateY(-5px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+    }
+    .links i {
+      font-size: 18px;
+    }
+    .visitor-counter {
+      margin-top: 25px;
+      font-size: 16px;
+      font-weight: bold;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 8px 15px;
+      border-radius: 20px;
+      display: inline-block;
+      animation: fadeInUp 1.5s;
+    }
+
+    /* Animations */
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes bounceIn {
+      0% { opacity: 0; transform: scale(0.3); }
+      50% { opacity: 1; transform: scale(1.05); }
+      70% { transform: scale(0.9); }
+      100% { transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+  <button class="toggle-btn" onclick="playClickSound(); toggleMode()">🌙/☀️</button>
+  
+  <img src="https://via.placeholder.com/120" alt="Profile" class="profile-img">
+  <h1 onclick="playClickSound()">مصعب الشفيع - Musab Elshafia</h1>
+  <p onclick="playClickSound()">مرحبا بكم في صفحتي 👋 | Welcome to my page 👋</p>
+
+  <div class="links">
+    <a href="https://www.tiktok.com/@yourusername" target="_blank" onclick="playClickSound()"><i class="fab fa-tiktok"></i> تيك توك | TikTok</a>
+    <a href="https://www.instagram.com/yourusername" target="_blank" onclick="playClickSound()"><i class="fab fa-instagram"></i> انستقرام | Instagram</a>
+    <a href="https://www.snapchat.com/add/yourusername" target="_blank" onclick="playClickSound()"><i class="fab fa-snapchat"></i> سناب شات | Snapchat</a>
+    <a href="https://yourstore.com" target="_blank" onclick="playClickSound()"><i class="fas fa-store"></i> متجري | My Store</a>
+    <a href="mailto:yourmail@example.com" target="_blank" onclick="playClickSound()"><i class="fas fa-envelope"></i> تواصل معي | Contact Me</a>
+  </div>
+
+  <button class="copy-btn" onclick="playClickSound(); copyLink()"><i class="fas fa-link"></i> نسخ رابط الصفحة | Copy Link</button>
+
+  <div class="visitor-counter">👀 عدد الزوار: <span id="visitCount">0</span></div>
+
+  <!-- صوت الضغط -->
+  <audio id="clickSound" src="https://www.myinstants.com/media/sounds/mouse-click.mp3"></audio>
+
+  <script>
+    function toggleMode() {
+      document.body.classList.toggle('light');
+    }
+
+    function copyLink() {
+      const dummy = document.createElement('input');
+      const url = window.location.href;
+      dummy.value = url;
+      document.body.appendChild(dummy);
+      dummy.select();
+      document.execCommand('copy');
+      document.body.removeChild(dummy);
+      alert('تم نسخ الرابط ✅ | Link copied ✅');
+    }
+
+    function playClickSound() {
+      const sound = document.getElementById('clickSound');
+      sound.currentTime = 0;
+      sound.play();
+    }
+
+    // عداد الزوار (محلي - يحسب زيارات الجهاز نفسه)
+    let visits = localStorage.getItem('visitCount') || 0;
+    visits++;
+    localStorage.setItem('visitCount', visits);
+    document.getElementById('visitCount').innerText = visits;
+  </script>
+</body>
+</html>
